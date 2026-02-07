@@ -1,5 +1,6 @@
 import blogApp from "./app.js";
 import appConfig from "./config/env.js";
+import connection from "./config/mysql.js";
 
 let shutting_down = false;
 
@@ -8,12 +9,13 @@ async function startServer() {
         console.log(`Server Listening on PORT: ${appConfig.PORT}`);
     });
     
-    const gracefulShutdown = () => {
+    const gracefulShutdown = async() => {
         if(shutting_down) {
             return;
         };
         console.log("Shutting down graefully...");
         shutting_down = true;
+        await connection.end().then(() => console.log('DB Connection Closed'));
         server.close(async() => {
             process.exit(0);
         });
