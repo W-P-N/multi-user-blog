@@ -1,5 +1,6 @@
 import blogApp from "./app.js";
 import appConfig from "./config/env.js";
+import connection from "./config/mysql.js";
 
 let shutting_down = false;
 
@@ -7,6 +8,13 @@ async function startServer() {
     const server = blogApp.listen(appConfig.PORT, () => {
         console.log(`Server Listening on PORT: ${appConfig.PORT}`);
     });
+    // Connect Db
+    try {
+        connection.connect();
+        console.log("MySQL Server Connected.");
+    } catch (error) {
+        console.error("Unable to connect to MYSQL server: ", error);
+    };
     
     const gracefulShutdown = () => {
         if(shutting_down) {
