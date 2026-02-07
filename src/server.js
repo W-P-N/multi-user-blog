@@ -8,20 +8,14 @@ async function startServer() {
     const server = blogApp.listen(appConfig.PORT, () => {
         console.log(`Server Listening on PORT: ${appConfig.PORT}`);
     });
-    // Connect Db
-    try {
-        connection.connect();
-        console.log("MySQL Server Connected.");
-    } catch (error) {
-        console.error("Unable to connect to MYSQL server: ", error);
-    };
     
-    const gracefulShutdown = () => {
+    const gracefulShutdown = async() => {
         if(shutting_down) {
             return;
         };
         console.log("Shutting down graefully...");
         shutting_down = true;
+        await connection.end().then(() => console.log('DB Connection Closed'));
         server.close(async() => {
             process.exit(0);
         });
