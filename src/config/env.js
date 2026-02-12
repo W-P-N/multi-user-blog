@@ -10,7 +10,8 @@ const appConfig = {
         MYSQL_USER: process.env.MYSQL_USER || 'root',
         MYSQL_PASSWORD: process.env.MYSQL_PASSWORD || '',
         MYSQL_DB: process.env.MYSQL_DB || 'blog',
-        MYSQL_PORT: parseInt(process.env.MYSQL_PORT )|| 3306
+        MYSQL_PORT: parseInt(process.env.MYSQL_PORT )|| 3306,
+        MYSQL_RETRY: parseInt(process.env.MYSQL_RETRY )|| 5
     }
 };
 
